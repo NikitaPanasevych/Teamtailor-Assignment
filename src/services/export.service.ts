@@ -2,19 +2,21 @@ import { Response } from 'express';
 import { getCandidates } from '@/api/teamtailor.api';
 import { mapCandidatesToCsvRows } from '@/utils/mapCandidatesToCsv';
 import * as csv from 'fast-csv';
+import { logger } from '@/utils/logger';
 
 export const streamCandidatesAsCsv = async (res: Response): Promise<void> => {
 	const abortController = new AbortController();
 	const { signal } = abortController;
 
 	const onClientClose = () => {
-		console.log('[export] Client disconnected — aborting API requests');
+		logger.info('Client disconnected — aborting API requests');
 		abortController.abort();
 	};
 
 	res.on('close', onClientClose);
 
 	try {
+		logger.info('Starting candidate export stream');
 		res.write('\uFEFF');
 
 		const csvHeaders = [
@@ -30,6 +32,7 @@ export const streamCandidatesAsCsv = async (res: Response): Promise<void> => {
 		csvStream.pipe(res);
 
 		let currentUrl: string | undefined = undefined;
+		let totalRows = 0;
 
 		while (true) {
 			if (signal.aborted) break;
@@ -39,6 +42,7 @@ export const streamCandidatesAsCsv = async (res: Response): Promise<void> => {
 			const rows = mapCandidatesToCsvRows(apiResponse);
 			for (const row of rows) {
 				csvStream.write(row);
+				totalRows++;
 			}
 
 			if (apiResponse.links && apiResponse.links.next) {
@@ -49,11 +53,16 @@ export const streamCandidatesAsCsv = async (res: Response): Promise<void> => {
 		}
 
 		csvStream.end();
+		if (!signal.aborted) {
+			logger.info({ totalRows }, 'Candidate export completed successfully');
+		}
 	} catch (error) {
 		if (signal.aborted) {
-			console.log('[export] Export aborted due to client disconnect');
+			logger.info('Export aborted due to client disconnect');
 			return;
 		}
+
+		logger.error({ err: error instanceof Error ? error.message : String(error) }, 'Export streaming failed');
 
 		if (!res.headersSent) {
 			res.status(500).json({ error: 'Failed to initiate export' });
