@@ -17,22 +17,25 @@
   "author": "Nikita Panasevych",
   "main": "server.ts",
   "scripts": {
-    "test": "test",
+    "test": "echo \"No tests configured\"",
+    "build": "tsc",
     "dev": "nodemon -r tsconfig-paths/register src/server.ts",
     "start": "node dist/server.js"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.0",
-    "dotenv": "^17.3.1",
     "eslint": "^10.0.2",
-    "express": "^5.2.1",
-    "install": "^0.13.0",
     "nodemon": "^3.1.14",
-    "npm": "^11.10.1",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "fast-csv": "^5.0.5",
+    "zod": "^4.3.6"
   }
 }
