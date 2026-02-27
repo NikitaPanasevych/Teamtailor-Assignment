@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.git
+.gitignore
+.prettierrc
+eslint.config.mjs
+README.md
+__tests__
+*.test.ts

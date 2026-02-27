@@ -1,12 +1,7 @@
-import express from 'express';
 import config from '@/config';
-
-const app = express();
-
-app.get('/', (req, res) => {
-	res.send('Hello World!');
-});
+import app from '@/app';
+import { logger } from '@/utils/logger';
 
 app.listen(config.port, () => {
-	console.log(`Server is running on port ${config.port}`);
+	logger.info({ port: config.port }, 'Server is running');
 });

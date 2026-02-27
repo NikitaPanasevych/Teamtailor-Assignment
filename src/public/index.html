@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Teamtailor Candidate Exporter</title>
+		<meta name="description" content="Export all Teamtailor candidates and job applications to CSV in one click." />
+		<link rel="stylesheet" href="/styles.css" />
+	</head>
+	<body>
+		<canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+		<main class="scene">
+			<div class="card card-reveal">
+				<div class="badge reveal reveal--2">
+					<span class="badge__dot"></span>
+					Candidate Export Tool
+				</div>
+
+				<h1 class="headline reveal reveal--3">Export your<br />candidates</h1>
+
+				<p class="subtext reveal reveal--3">
+					Extract <strong>all candidates</strong> and their job applications from Teamtailor into a structured CSV
+					— ready for analysis, import, or reporting.
+				</p>
+
+				<div class="features reveal reveal--4">
+					<span class="feature-pill">
+						<span class="feature-pill__icon">⚡</span>
+						Bulk Export
+					</span>
+					<span class="feature-pill">
+						<span class="feature-pill__icon">📊</span>
+						CSV Format
+					</span>
+					<span class="feature-pill">
+						<span class="feature-pill__icon">🔗</span>
+						Job Applications
+					</span>
+				</div>
+
+				<button id="downloadBtn" class="btn-download reveal reveal--5" aria-label="Download candidates as CSV">
+					<span class="btn-download__icon">
+						<svg
+							width="18"
+							height="18"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="7 10 12 15 17 10" />
+							<line x1="12" y1="15" x2="12" y2="3" />
+						</svg>
+					</span>
+					<span id="btnLabel">Export Candidates CSV</span>
+					<div id="btnSpinner" class="spinner"></div>
+					<div id="progressTrack" class="progress-track"></div>
+				</button>
+
+				<div id="statusText" class="status">
+					<span class="status__check">↓</span>
+					Preparing your export…
+				</div>
+			</div>
+
+			<div class="footer reveal reveal--6">
+				Built by <a href="https://github.com/NikitaPanasevych" target="_blank" rel="noopener">Nikita Panasevych</a>
+			</div>
+		</main>
+
+		<script src="/app.js"></script>
+	</body>
+</html>
