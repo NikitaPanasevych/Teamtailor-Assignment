@@ -10,10 +10,22 @@ const EnvSchema = z.object({
 		.optional()
 		.transform((val) => (val ? Number(val) : 3000)),
 	NODE_ENV: z.string().default('development'),
-	LOG_LEVEL: z.string().default('info'),
-	API_SECRET: z.string().min(1, 'API_SECRET is required'),
-	HOST_URL: z.string().url('HOST_URL must be a valid URL'),
-	API_VERSION: z.string().min(1, 'API_VERSION is required'),
+	LOG_LEVEL: z
+		.string()
+		.default('info')
+		.transform((val) => val.replace(/^'|'$/g, '')),
+	API_SECRET: z
+		.string()
+		.transform((val) => val.replace(/^'|'$/g, ''))
+		.pipe(z.string().min(1, 'API_SECRET is required')),
+	HOST_URL: z
+		.string()
+		.transform((val) => val.replace(/^'|'$/g, ''))
+		.pipe(z.string().url('HOST_URL must be a valid URL')),
+	API_VERSION: z
+		.string()
+		.transform((val) => val.replace(/^'|'$/g, ''))
+		.pipe(z.string().min(1, 'API_VERSION is required')),
 });
 
 const parsedEnv = EnvSchema.safeParse(process.env);

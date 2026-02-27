@@ -73,13 +73,29 @@ Run the development server natively with live reloading:
 npm run dev
 ```
 
-### Build and Production
+### Production Build
 
 Compile the TypeScript code and start the project:
 
 ```bash
 npm run build
 npm start
+```
+
+### Docker (Recommended for Reviewers)
+
+To run the application inside a Docker container without relying on a local Node.js environment:
+
+1. Build the Docker image:
+
+```bash
+docker build -t teamtailor-app .
+```
+
+2. Run the Docker container (ensure you have provided the `.env` file from `.env.example`):
+
+```bash
+docker run -p 3000:3000 --env-file .env teamtailor-app
 ```
 
 ## AI Usage
